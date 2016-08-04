@@ -1,0 +1,41 @@
+\section{Introduction}
+
+\ac{Luci} uses GeoJSON format to represent scenario geometry.
+The format declares geometry information syntax, but does not declare consistent naming and geometry type mappings for \ac{Luci} scenario entities, such as buildings, roads, etc.
+This document aims at providing guidelines on usage of \ac{Luci} scenarios in \ac{Luci} clients and services.
+
+Current document may have not up-to-date action syntax specification.
+In order to get the most recent specification one can use ``generate specification'' \ac{Luci} command.
+This document is not intended to be a replacement to that feature.
+
+The structure of the document is organized as follows:
+Section~\ref{sec:editing} gives an information how to participate in editing of the current document.
+Section~\ref{sec:actions} explains the syntax of \ac{Luci} actions with some commentaries.
+Section~\ref{sec:scenario} is the main informational part of the document: it discusses the conventions used between \ac{Luci} and its services.
+
+\subsection{Editing and understanding the document}
+\label{sec:editing}
+
+The document source resides in git repository \url{https://bitbucket.org/treyerl/lucy.git},
+the \texttt{.tex} file is \path{spec/lpsg/LPS-guidelines.tex}, compiled with \texttt{texlive} \texttt{pdflatex} tool.
+
+The document contains a number of JSON or GeoJSON listings representing content of \ac{Luci} actions.
+In the listings we use the following coloring scheme:
+%
+\begin{itemize}
+\item Key names are shown in black (e.g. \texttt{action});
+\item Reserved keywords, such as value types are shown in blue (e.g. \texttt{\color{blue}string});
+\item Fixed strings constants are shown in red (e.g. \texttt{\color{red}"create\_scenario"});
+\item Additional structural keywords are shown in grey
+(e.g. \texttt{\color{darkgray}OPT} means the key-value pair is optional, \texttt{\color{darkgray}XOR} before several key-value pairs means exactly one alternative).
+\item Comments are in purple, separated by double slash (e.g. \texttt{\color{purple}// comment})
+\end{itemize}
+%
+If there is a missing reserved keyword, you can add it into tex file annotation (\texttt{keywords} or \texttt{ndkeywords} lists in \texttt{lstdefinelanguage} command).
+
+\paragraph{A note on jsonGeometry data type}
+The word \texttt{geometry} in \ac{Luci} specification has two different meanings.
+On the one hand it is a name of the key that occurs from time to time in \ac{Luci} actions.
+On the other hand it is a name of a pre-defined data type that represents scenario geometry in JSON format.
+To resolve this ambiguity, in current document we use word \texttt{geometry} to represent the name of the key, and \texttt{\color{blue}jsonGeometry} to represent the data type.
+This differentiation does not introduce any changes to the existing JSON messages.

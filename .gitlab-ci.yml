@@ -4,6 +4,7 @@ before_script:
 - apt-get update
 - apt-get install -y make
 - apt-get install -y texlive texlive-latex-extra texlive-fonts-extra texlive-generic-extra texlive-bibtex-extra texlive-science
+- apt-get install -y latexmk
 
 stages:
 - build
