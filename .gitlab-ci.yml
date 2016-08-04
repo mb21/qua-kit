@@ -1,0 +1,23 @@
+image: ubuntu:16.04
+
+before_script:
+- apt-get update
+- apt-get install -y make
+- apt-get install -y texlive texlive-latex-extra texlive-fonts-extra texlive-generic-extra texlive-bibtex-extra texlive-science
+
+stages:
+- build
+
+build:
+   stage: build
+
+   script:
+   - make pdf
+   - make clean
+
+   only:
+   - master
+
+   tags:
+   - ubuntu
+   - docker
