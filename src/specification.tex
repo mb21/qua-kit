@@ -95,12 +95,25 @@
 % *** DOCUMENT STARTS ***
 \begin{document}
 \maketitle
+\tableofcontents
+\section*{Changelog}
+\begin{itemize}
+  \item 2016-08-05: First draft
+\end{itemize}
+\clearpage
+
 % up here was the title, the document content starts here
 % ----------------------------------------------------------------------------
 
 \input{src/main/ch0_introduction.tex}
-\input{src/main/ch1_luci.tex}
-\input{src/main/ch2_services.tex}
+\input{src/main/ch1_serviceapi.tex}
+%\input{src/main/ch2_networking.tex}
+\input{src/main/ch3_storage.tex}
+\input{src/main/ch4_computing.tex}
+
+\appendix
+
+\input{src/appendix/builtinservices.tex}
 
 % ----------------------------------------------------------------------------
 \end{document}

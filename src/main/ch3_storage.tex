@@ -1,5 +1,16 @@
-\section{Services}
-\label{ch:services}
+\section{Scenario Services}
+\label{ch:storage}
+
+\ac{Luci} uses GeoJSON format to represent scenario geometry.
+The format declares geometry information syntax, but does not declare consistent naming and geometry type mappings for \ac{Luci} scenario entities, such as buildings, roads, etc.
+This document aims at providing guidelines on usage of \ac{Luci} scenarios in \ac{Luci} clients and services.
+
+\paragraph{A note on jsonGeometry data type}
+The word \texttt{geometry} in \ac{Luci} specification has two different meanings.
+On the one hand it is a name of the key that occurs from time to time in \ac{Luci} actions.
+On the other hand it is a name of a pre-defined data type that represents scenario geometry in JSON format.
+To resolve this ambiguity, in current document we use word \texttt{geometry} to represent the name of the key, and \texttt{\color{blue}jsonGeometry} to represent the data type.
+This differentiation does not introduce any changes to the existing JSON messages.
 
 \subsection{\acs{Luci} scenario actions}
 \label{sec:services:actions}
@@ -133,8 +144,6 @@ In case of wide usage they might be enforced in \ac{Luci}, thus moving one step 
 
 \subsubsection{Standardized rules}
 \label{sec:services:standardru}
-
-
 Object \texttt{geometry} in listing~\ref{json:geometry} is assumed to be of type \texttt{FeatureCollection}.
 Every entity is represented as a \texttt{Feature} inside that collection, and has a property \texttt{geomID:\color{blue}long} that is given by a client or \ac{Luci} (if the client omits the property).
 
