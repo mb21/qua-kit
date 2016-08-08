@@ -21,16 +21,16 @@ def escape_tex(value):
         newval = pattern.sub(replacement, newval)
     return newval
 
-def create_json(js):
+def create_json(js, comment):
     if isinstance(js, str) or isinstance(js, unicode):
-        return js
+        return js + ("// {}".format(comment) if comment != "" else "")
     else:
         if isinstance(js, list) and not isinstance(js[0], dict):
             return js
         print js
         ret = {}
         for child in js:
-            ret[child["name"]] = create_json(child["type"])
+            ret[child["name"]] = create_json(child["type"], child["comment"])
         return ret
 
 def generate_tex(js):
@@ -48,9 +48,9 @@ def generate_tex(js):
 
     for service in js:
         for i in range(len(js[service]["inputs"])):
-            js[service]["inputs"][i]["json"] = json.dumps(create_json(js[service]["inputs"][i]["type"]), indent=2, sort_keys=True)
+            js[service]["inputs"][i]["json"] = json.dumps(create_json(js[service]["inputs"][i]["type"],""), indent=2, sort_keys=True)
         for i in range(len(js[service]["outputs"])):
-            js[service]["outputs"][i]["json"] = json.dumps(create_json(js[service]["outputs"][i]["type"]), indent=2, sort_keys=True)
+            js[service]["outputs"][i]["json"] = json.dumps(create_json(js[service]["outputs"][i]["type"],""), indent=2, sort_keys=True)
     return template.render(services=js)
 
 def parse_input(soup):

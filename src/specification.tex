@@ -1,7 +1,7 @@
 \documentclass[pdftex,11pt,a4paper]{article} % or extarticle
 
 % *** PERSONAL & PAPER INFO ***
-\newcommand{\sAuthors}{Michael Franzen, Artem Chirkin, Lukas Treyer}
+\newcommand{\sAuthors}{Artem Chirkin, Lukas Treyer, Michael Franzen}
 \newcommand{\sTitle}{LC2 Specification}
 \newcommand{\sSubject}{\sTitle}
 \newcommand{\sKeywords}{Luci, middleware, json, geojson, planning}
@@ -61,7 +61,7 @@
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
 
 \lstdefinelanguage{JSON}{
-  keywords={string,long,jsonGeometry,boolean,any,object,number},
+  keywords={string,long,jsonGeometry,boolean,any,object,number,list,json,integer},
   keywordstyle=\color{blue}\bfseries,
   ndkeywords={OPT, XOR, MANY},
   ndkeywordstyle=\color{darkgray}\bfseries,
@@ -123,8 +123,8 @@
 \input{src/main/ch0_introduction.tex}
 \input{src/main/ch1_serviceapi.tex}
 %\input{src/main/ch2_networking.tex}
-\input{src/main/ch3_storage.tex}
-\input{src/main/ch4_computing.tex}
+\input{src/main/ch3_scenarios.tex}
+\input{src/main/ch4_quacompliance.tex}
 
 \appendix
 
