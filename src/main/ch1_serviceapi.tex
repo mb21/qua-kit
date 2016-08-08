@@ -1,2 +1,17 @@
 \section{Service API}
 \label{ch:serviceapi}
+
+For registering a service in Luci, a set of three parameters have to be implemented into the service and forwarded to Luci using the built-in service \texttt{RemoteRegister} (Appendix \ref{ch:builtinservices:RemoteRegister}).
+
+The three required fields are
+\begin{itemize}
+  \item \texttt{serviceName}: The service name as a string
+  \item \texttt{description}: The service description as a string
+  \item \texttt{exampleCall}: An example call to the service as json encoded string
+\end{itemize}
+
+If a service accepts input arguments or outputs data, two additional parameters can be provided:
+\begin{itemize}
+  \item \texttt{input}
+  \item \texttt{output}
+\end{itemize}
