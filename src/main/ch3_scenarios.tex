@@ -1,5 +1,5 @@
 \section{Scenario Services}
-\label{ch:storage}
+\label{ch:scenarios}
 
 \ac{Luci} uses GeoJSON format to represent scenario geometry.
 The format declares geometry information syntax, but does not declare consistent naming and geometry type mappings for \ac{Luci} scenario entities, such as buildings, roads, etc.
@@ -13,11 +13,11 @@ To resolve this ambiguity, in current document we use word \texttt{geometry} to 
 This differentiation does not introduce any changes to the existing JSON messages.
 
 \subsection{\acs{Luci} scenario actions}
-\label{sec:services:actions}
+\label{ch:scenarios:actions}
 
 % {"name":"shp_file_test","action":"create_scenario","geometry":{"anl.dbf":{"format":"dbf","attributeMap":{"geomid":"objectid","timestampformat":"YYYY","timestamp":"yearofchan"},"streaminfo":{"checksum":"48AC6C5CD751A525778A144EB66727","length":3138,"order":2}},"anl.shp":{"format":"shp","streaminfo":{"checksum":"39FBD5108DED0FF5637721A4820C484","length":1444,"order":1}},"anl.shx":{"format":"shx","streaminfo":{"checksum":"6B6F93D87FB73FF1AB92C3BD2938D2C","length":484,"order":3}}}}
 
-To send geometry to \ac{Luci}, we wrap it in the structure that is shown in listing~\ref{json:geometry}.
+To send geometry to \ac{Luci}, we wrap it in the structure that is shown in listing~\ref{json:geometry}
 Special type \texttt{\color{blue}jsonGeometry} wraps various types of geometry processed by \ac{Luci}.
 It allows to enclose arbitrary number of custom-named geometries (keys \texttt{KEY\_NAME\_N}) inline (GeoJSON) or in separate files (as binary attachments).
 %
@@ -134,21 +134,21 @@ Although GeoJSON specification provides all necessary geometry primitives,
 we need a more structured convention to define one-to-one mapping between the geometry and scenario entities.
 \ac{Luci} does not generate an error for an input that does not follow it -- the convention only describes what kind of data structures services and clients should expect.
 
-Section~\ref{sec:standardru} describes the rules assumed by \ac{Luci} when communicating with all services and clients.
-Section~\ref{sec:convenru} describes the rules assumed by most applications, but not checked in \ac{Luci}.
-Section~\ref{sec:appru} describes the application-specific rules.
+Section~\ref{ch:scenarios:standardrules} describes the rules assumed by \ac{Luci} when communicating with all services and clients.
+Section~\ref{ch:scenarios:conventionalrules} describes the rules assumed by most applications, but not checked in \ac{Luci}.
+Section~\ref{ch:scenarios:applicationrules} describes the application-specific rules.
 Any service or client provider (\ac{Luci} user) may introduce a rule that is used in their application.
-The providers are encouraged to add these rules into section~\ref{sec:appru}.
-By an agreement in our team some of the rules go up from section~\ref{sec:appru} to section~\ref{sec:convenru}.
-In case of wide usage they might be enforced in \ac{Luci}, thus moving one step up to section~\ref{sec:standardru}.
+The providers are encouraged to add these rules into section~\ref{ch:scenarios:applicationrules}.
+By an agreement in our team some of the rules go up from section~\ref{ch:scenarios:applicationrules} to section~\ref{ch:scenarios:conventionalrules}.
+In case of wide usage they might be enforced in \ac{Luci}, thus moving one step up to section~\ref{ch:scenarios:standardrules}.
 
-\subsubsection{Standardized rules}
-\label{sec:services:standardru}
+\subsubsection{Standardized Rules}
+\label{ch:scenarios:standardrules}
 Object \texttt{geometry} in listing~\ref{json:geometry} is assumed to be of type \texttt{FeatureCollection}.
 Every entity is represented as a \texttt{Feature} inside that collection, and has a property \texttt{geomID:\color{blue}long} that is given by a client or \ac{Luci} (if the client omits the property).
 
-\subsubsection{Conventional rules}
-\label{sec:services:convenru}
+\subsubsection{Conventional Rules}
+\label{ch:scenarios:conventionalrules}
 
 Some services require 3D objects, others use only 2D footprints.
 To distinguish these two types of geometry, we agreed on using \texttt{Feature} property \texttt{layer}.
@@ -162,8 +162,8 @@ To be processed correctly by \ac{Luci} services, the footprint requires property
 \end{itemize}
 
 
-\subsubsection{Per-application rules}
-\label{sec:services:appru}
+\subsubsection{Per-application Rules}
+\label{ch:scenarios:applicationrules}
 
 \paragraph{Web geometry modeler}
 The application distinguishes dynamic and static geometry:
