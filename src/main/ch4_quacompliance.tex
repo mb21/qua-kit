@@ -1,6 +1,75 @@
 \section{QUA-Compliance}
 \label{ch:quacompliance}
 
+To make a service compliant for use in the QUA-Kit, a service is subject to additional constraints that are described here.
+
 \subsection{QUA-View-Compliance}
+
+\subsubsection{Registering}
+
+\paragraph{Metadata}
+When registering a service, the attribute \texttt{description} of the RemoteRegister service becomes obligatory. Furthermore, the boolean field \texttt{qua-view-compliant} must be provided and set to \texttt{True}.
+
+Moreover, the optional field \texttt{constraints} is introduced and takes the following form:
+\begin{lstlisting}
+  "constraint" : {
+      "some input" : ["foo", "bar"],
+      "some other input" : {
+          "min" : 0,
+          "max" : 100,
+          "integer" : True
+      }
+      // [...]
+  }
+\end{lstlisting}
+For each input, a field in the constraints can be provided that specifies the domain of this input field further. Each constraint is either a list of values corresponding to an input field's type, or, for numeric values, a range. If no constraint is given for an input field, the input field's domain is considered unrestricted and every value of it's type is valid. There is a maximum of one constraint per input field allowed. If more than one constraint exists for a given input field, the service is considered broken and must be rejected.
+
+The example above specifieds three inputs for a service. The first input argument is either \texttt{foo} or \texttt{bar}. The second one takes any whole number in the interval [0,100]. The third one can be any number since no constraint has been specified.
+
+Note that a range constraint does not necessarily contain all three arguments min, max and integer.
+
+\paragraph{Inputs}
+While services originally can have arbitrary inputs, in QUA-compliant services, two input fields become obligatory: \texttt{mode} and \texttt{scenario\_id}. The mode is how the service should operate, normally it operates on a \texttt{scenario}, \texttt{objects} or \texttt{points} level; or creates a new scenario in the mode \texttt{new}.
+
+The scenario-id specifies the scenario which should be analyzed by the service. If the mode is either objects or points, a binary attachment must be included in the service call:
+\begin{itemize}
+  \item \textbf{Points} are serialized to a binary file of \texttt{float32} values wherein three consecutive values correspond to one three dimensional vector.
+  \item \textbf{Objects} are serialized to a binary file \texttt{ulong64} values wherein each value corresponds to one object id contained in the specified scenario.
+\end{itemize}
+
+\paragraph{Outputs}
+The output of a service depends on the mode it operates in:
+
+\begin{itemize}
+  \item \texttt{scenario}:
+  \begin{lstlisting}
+{
+  unit : string
+  value : number
+}
+  \end{lstlisting}
+  \item \texttt{objects}
+  \begin{lstlisting}
+{
+  unit : string
+  object_ids: [long]
+  values : [number]
+}
+  \end{lstlisting}
+  \item \texttt{points}
+  \begin{lstlisting}
+{
+  unit : string
+  values : [number]
+}
+  \end{lstlisting}
+  \item \texttt{new}
+  \begin{lstlisting}
+{
+  scenario_id : long // the id of the newly created scenario
+  timestamp : long
+}
+  \end{lstlisting}
+\end{itemize}
 
 \clearpage
