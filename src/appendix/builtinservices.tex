@@ -6,14 +6,15 @@
 Returns the json specification of attachments and json geometry objects.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 AttachmentJSON
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -38,6 +39,7 @@ Downloads
 \&lt;md5 checksum\&gt;.\&lt;format\&gt; 
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 Download
@@ -47,9 +49,9 @@ Download
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -73,6 +75,7 @@ json
 Tests whether a service with the given serviceName or a task with given taskID exists.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 Exists
@@ -86,9 +89,9 @@ number
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -113,6 +116,7 @@ types at a given recursion level or c) a given json template with values
  equal to 'null' meaning only keys are compared.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 FilterServices
@@ -138,9 +142,9 @@ json
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -164,14 +168,15 @@ json
 Returns the startup of time of Luci.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 GetStartupTime
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -197,14 +202,15 @@ service to be deregistered is the last remaining of its kind, its
 serviceName will be removedfrom the list of available services.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 RemoteDeregister
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -225,6 +231,7 @@ string
 Registers a client as a service.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 RemoteRegister
@@ -254,9 +261,9 @@ json
 json
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -278,6 +285,7 @@ Used
  allmachines having a 'ServiceControl' remote service running.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 ServiceControl
@@ -355,9 +363,9 @@ ServiceControl
 }
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -458,6 +466,7 @@ availableworkers either since startup time or during the requested
 period
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 ServiceHistory
@@ -471,9 +480,9 @@ string
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -513,6 +522,7 @@ Returns
 like this one, in- and output description and an example call. 
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 ServiceInfo
@@ -526,9 +536,9 @@ boolean
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -551,14 +561,15 @@ string
 Get a list of all loaded and registered services as a list of service names.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 ServiceList
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -581,6 +592,7 @@ json
 Create a task. A task corresponds to a node in the workflow diagram.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.Create
@@ -609,9 +621,9 @@ json
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -630,6 +642,7 @@ string
 Returns infos about a task (requesting a taskID) or returns a list if ids representingthe same service
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.Get
@@ -643,9 +656,9 @@ string
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -674,6 +687,7 @@ string
 Remove tasks.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.Remove
@@ -687,9 +701,9 @@ string
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -707,6 +721,7 @@ string
 Reverts a task to the last saved state.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.Revert
@@ -716,9 +731,9 @@ task.Revert
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -744,6 +759,7 @@ string
 Subscribes the current client to a taskID or any call to a service indicated byserviceName
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.SubscribeTo
@@ -761,9 +777,9 @@ list
 boolean
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -785,6 +801,7 @@ json
 Unsubscribe from a service or a list of taskIDs.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.UnsubscribeFrom
@@ -798,9 +815,9 @@ string
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -822,6 +839,7 @@ json
 Update a the input values / subscriptions of a task.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 task.Update
@@ -854,9 +872,9 @@ json
 }
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -875,6 +893,7 @@ string
 Used to simulate a service with a long calculation time.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.Delay
@@ -888,9 +907,9 @@ number
 any
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -912,6 +931,7 @@ json
 A service that simulates an error being thrown.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.Error
@@ -921,9 +941,9 @@ test.Error
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{error}: 
 \begin{lstlisting}
 string
@@ -935,6 +955,7 @@ string
 A service that serves as an (implementation) example.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.Fibonacci
@@ -948,9 +969,9 @@ number
 boolean
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -972,6 +993,7 @@ json
 A service to test sending and receiving attachments. Mainly used by connectionlibrary developers.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.FileEcho
@@ -981,9 +1003,9 @@ test.FileEcho
 attachment
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1001,6 +1023,7 @@ string
 Get either an amount of random numbers or create key-value-pairs from a key list.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.Randomly
@@ -1014,9 +1037,9 @@ number
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1046,6 +1069,7 @@ requires types to be one of 'jpg' or 'png'@inputs.key7 optional
 attachment with predefied required keys
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 test.Validation
@@ -1094,9 +1118,9 @@ attachment/jpg
 attachment/jpg
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1119,6 +1143,7 @@ json
 Authenticates a user
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Authenticate
@@ -1132,9 +1157,9 @@ string
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1156,6 +1181,7 @@ json
 Create a user by giving username, email, and sha1 encrypted password representedwith hexadecimals
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Create
@@ -1197,9 +1223,9 @@ string
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1221,6 +1247,7 @@ json
 Deletes a user if it does not own a group or [TODO] own a scenario
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Delete
@@ -1230,9 +1257,9 @@ user.Delete
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1254,14 +1281,15 @@ json
 Get a list of users
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.List
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1295,14 +1323,15 @@ json
 resets the connection to an unauthenticated state
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Logout
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1324,6 +1353,7 @@ json
 Allows to restrict given services only to given userIDs/groupIDs.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Permission
@@ -1341,9 +1371,9 @@ user.Permission
 }
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1365,6 +1395,7 @@ json
 Udpate user information and does sanity checks on some of the properties.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 user.Update
@@ -1410,9 +1441,9 @@ string
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1434,6 +1465,7 @@ json
 Create a workflow.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.Create
@@ -1447,9 +1479,9 @@ list
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1475,6 +1507,7 @@ string
 Returns a list of all workflows (not only root workflows).
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.List
@@ -1484,9 +1517,9 @@ workflow.List
 string
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{result}: \{'taskID':'name'\}, not a list but a json object; since keys in json cannot be numbers, the taskIDs are converted to string
 \begin{lstlisting}
 {
@@ -1503,6 +1536,7 @@ workflows to disk. In the future this would also allow to restore
 earlier versions of the workflow (no version tree, but linear versions).
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.Safe
@@ -1512,9 +1546,9 @@ workflow.Safe
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1532,6 +1566,7 @@ string
 Gets the services, the instance ids and corresponding startup args associated with this workflow.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.ServiceGet
@@ -1545,9 +1580,9 @@ number
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1575,6 +1610,7 @@ json
 Remove a service instance from a workflow configuration.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.ServiceRemove
@@ -1588,9 +1624,9 @@ number
 number
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1612,6 +1648,7 @@ json
 Start up all the services that are configured to run with the given workflow (taskID).
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.ServiceStart
@@ -1625,9 +1662,9 @@ number
 list
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1653,6 +1690,7 @@ json
 Update a service instance that is coupled to a workflow configuration.
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.ServiceUpdate
@@ -1682,9 +1720,9 @@ number
 boolean
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
@@ -1709,6 +1747,7 @@ set the values for in \& outputs, but actually creates in \&
 outputs dynamically for a workflow, its key, type and default value
 \subsubsection*{Inputs:}
 \begin{itemize}
+  \small
     \item \textbf{run}: 
 \begin{lstlisting}
 workflow.UpdateIO
@@ -1736,9 +1775,9 @@ number
 }
 \end{lstlisting}
   \end{itemize}
-
 \subsubsection*{Outputs:}
 \begin{itemize}
+  \small
     \item \textbf{XOR error}: 
 \begin{lstlisting}
 string
