@@ -7,69 +7,99 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
 
 \subsubsection{Registering}
 
-\paragraph{Metadata}
-When registering a service, the attribute \texttt{description} of the RemoteRegister service becomes obligatory. Furthermore, the boolean field \texttt{qua-view-compliant} must be provided and set to \texttt{True}.
-
-Moreover, the optional field \texttt{constraints} is introduced and takes the following form:
-\begin{lstlisting}
-  "constraint" : {
-      "some input" : ["foo", "bar"],
-      "some other input" : {
-          "min" : 0,
-          "max" : 100,
-          "integer" : True
-      }
-      // [...]
+\begin{lstlisting}[caption={Registering a QUA-compliant service}, label={lst:quacompliance}]
+{
+  run : "RemoteRegister",
+  description : "I am a random service", // obligatory
+  serviceName : "RandomQUA",
+  qua-view-compliant : true, // obligatory
+  inputs : {
+    geomID : number, // obligatory for all modes except "new"
+    mode : string, // obligatory
+    points : attachment,
+    some other input : number,
+    some 4th input : number
   }
+  constraint : {
+      some other input : {
+          min : 42,
+          max : 100,
+          integer : true
+      }
+  }
+  "exampleCall" : {
+    {
+      run : RandomQUA,
+      inputs : {
+        ScID : 123,
+        mode : "points",
+        points : {
+          format : "float32 array",
+          attachment {
+            length : 100,
+            position : 1
+          }
+        }
+        some other input : 42,
+        some 4th input : 13.37
+      }
+    }
+  }
+}
 \end{lstlisting}
-For each input, a field in the constraints can be provided that specifies the domain of this input field further. Each constraint is either a list of values corresponding to an input field's type, or, for numeric values, a range. If no constraint is given for an input field, the input field's domain is considered unrestricted and every value of it's type is valid. There is a maximum of one constraint per input field allowed. If more than one constraint exists for a given input field, the service is considered broken and must be rejected.
+
+\paragraph{Metadata}
+When registering a service, the attribute \texttt{description} of the RemoteRegister service becomes obligatory. Furthermore, the boolean field \texttt{qua-view-compliant} must be provided and set to \texttt{True} at root-level.
+
+Moreover, the optional field \texttt{constraints} is introduced and takes the form as seen in Listing \ref{lst:quacompliance}.
+For each input, a field in the constraints can be provided that specifies the domain of this input field further. Each constraint is either a list of values corresponding to an input field's type, or, for numeric values, a range. If no constraint is given for an input field, the input field's domain is considered unrestricted and every value of it's type is valid. There must be a constraint for \texttt{string}-inputs. There is a maximum of one constraint per input field allowed. If more than one constraint exists for a given input field, the service is considered broken and must be rejected.
 
 The example above specifieds three inputs for a service. The first input argument is either \texttt{foo} or \texttt{bar}. The second one takes any whole number in the interval [0,100]. The third one can be any number since no constraint has been specified.
 
 Note that a range constraint does not necessarily contain all three arguments min, max and integer.
 
 \paragraph{Inputs}
-While services originally can have arbitrary inputs, in QUA-compliant services, two input fields become obligatory: \texttt{mode} and \texttt{scenario\_id}. The mode is how the service should operate, normally it operates on a \texttt{scenario}, \texttt{objects} or \texttt{points} level; or creates a new scenario in the mode \texttt{new}.
+While services originally can have arbitrary inputs, in QUA-compliant services, two input fields become obligatory: \texttt{mode} and \texttt{ScID}.The mode is how the service should operate, normally it operates on a \texttt{scenario}, \texttt{objects} or \texttt{points} level; or creates a new scenario in the mode \texttt{new}.
 
 The scenario-id specifies the scenario which should be analyzed by the service. If the mode is either objects or points, a binary attachment must be included in the service call:
 \begin{itemize}
-  \item \textbf{Points} are serialized to a binary file of \texttt{float32} values wherein three consecutive values correspond to one three dimensional vector.
-  \item \textbf{Objects} are serialized to a binary file \texttt{ulong64} values wherein each value corresponds to one object id contained in the specified scenario.
+  \item \texttt{points}: Points are serialized to a binary file of \texttt{float32} values wherein three consecutive values correspond to one three dimensional vector.
 \end{itemize}
 
 \paragraph{Outputs}
-The output of a service depends on the mode it operates in:
+The output of a qua-compliant service depends on the mode it operates in. The header is therefore appended with the field \texttt{mode} which corresponds to the given input mode. The additional fields are defined as follows:
 
 \begin{itemize}
-  \item \texttt{scenario}:
+  \item \texttt{scenario}: The fields \texttt{unit : string} and \texttt{value : number} have to be added at root-level to the output header.
+
+  \item \texttt{objects}: The field \texttt{unit : string} is added at root level to the output header. Furthermore an attachment named \texttt{values} is added that consists of a numeric array in which the service results for all objects are stored in input-order.
+
+  \item \texttt{points}: The field \texttt{unit : string} is added at root level to the output header. Furthermore an attachment named \texttt{values} is added that consists of a numeric array in which the service results for all points are stored in input-order.
+
+  \item \texttt{new}: The header is appended at root-level with the following fields:
   \begin{lstlisting}
 {
-  unit : string
-  value : number
-}
-  \end{lstlisting}
-  \item \texttt{objects}
-  \begin{lstlisting}
-{
-  unit : string
-  object_ids: [long]
-  values : [number]
-}
-  \end{lstlisting}
-  \item \texttt{points}
-  \begin{lstlisting}
-{
-  unit : string
-  values : [number]
-}
-  \end{lstlisting}
-  \item \texttt{new}
-  \begin{lstlisting}
-{
-  scenario_id : long // the id of the newly created scenario
-  timestamp : long
+  scenario_id : long, // the id of the newly created scenario
+  timestamp_accessed : long, // the timestamp at which the scenario was accessed if the ScID-field was set in the input
+  timestamp_modified : long // the timestamp at which the new scenario was stored
 }
   \end{lstlisting}
 \end{itemize}
+
+An example output is given in Listing \ref{lst:quacompliantresult}.
+
+\begin{lstlisting}[caption={A qua-compliant service output}, label={lst:quacompliantresult}]
+{
+  result : {
+    unit : "metre",
+    mode : "scenario",
+    value : 15.0
+  },
+  callID : 213,
+  duration : 10.2,
+  taskID : 1,
+  serviceName : "RandomQUA"
+}
+\end{lstlisting}
 
 \clearpage
