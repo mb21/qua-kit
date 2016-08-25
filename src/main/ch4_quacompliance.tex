@@ -12,6 +12,7 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
   run : "RemoteRegister",
   description : "I am a random service", // obligatory
   serviceName : "RandomQUA",
+  callID : 1, // obligatory
   qua-view-compliant : true, // obligatory
   inputs : {
     geomID : number, // obligatory for all modes except "new"
@@ -19,6 +20,15 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
     points : attachment,
     some other input : number,
     some 4th input : number
+  },
+  outputs : {
+    unit : string,
+    mode : string,
+    XOR value : number,
+    XOR values : attachment,
+    OPT scenario_id : long,
+    OPT timestamp_accessed : int,
+    OPT timestamp_modified : int
   }
   constraint : {
       some other input : {
@@ -26,8 +36,8 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
           max : 100,
           integer : true
       }
-  }
-  "exampleCall" : {
+  },
+  exampleCall : {
     {
       run : RandomQUA,
       inputs : {
@@ -86,9 +96,9 @@ The output of a qua-compliant service depends on the mode it operates in. The he
   \end{lstlisting}
 \end{itemize}
 
-An example output is given in Listing \ref{lst:quacompliantresult}.
+Example outputs given in Listings \ref{lst:quacompliantresult:scenario}, \ref{lst:quacompliantresult:objects}, \ref{lst:quacompliantresult:points}, \ref{lst:quacompliantresult:new}.
 
-\begin{lstlisting}[caption={A qua-compliant service output}, label={lst:quacompliantresult}]
+\begin{lstlisting}[caption={A qua-compliant service output for mode \texttt{scenario}}, label={lst:quacompliantresult:scenario}]
 {
   result : {
     unit : "metre",
@@ -99,6 +109,66 @@ An example output is given in Listing \ref{lst:quacompliantresult}.
   duration : 10.2,
   taskID : 1,
   serviceName : "RandomQUA"
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={A qua-compliant service output for mode \texttt{objects}}, label={lst:quacompliantresult:objects}]
+{
+  result : {
+    unit : "metre",
+    mode : "objects"
+  },
+  callID : 213,
+  duration : 10.2,
+  taskID : 1,
+  serviceName : "RandomQUA",
+  values : {
+    name : "values",
+    format : "float32 array",
+    attachment : {
+      length: 1024,
+      checksum: "2929bead3ee3cf55113ec9aade2b6add",
+      position: 1
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={A qua-compliant service output for mode \texttt{points}}, label={lst:quacompliantresult:points}]
+{
+  result : {
+    unit : "metre",
+    mode : "points"
+  },
+  callID : 213,
+  duration : 10.2,
+  taskID : 1,
+  serviceName : "RandomQUA",
+  values : {
+    name : "values",
+    format : "float32 array",
+    attachment : {
+      length: 1024,
+      checksum: "50752c7cb358a5fffd913d9aa3605433",
+      position: 1
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={A qua-compliant service output for mode \texttt{new}}, label={lst:quacompliantresult:new}]
+{
+  result : {
+    unit : "metre",
+    mode : "new"
+  },
+  callID : 213,
+  duration : 3.0,
+  taskID : 1,
+  serviceName : "RandomQUA",
+  scenario_id : 1337,
+  timestamp_accessed : 1472137755,
+  timestamp_modified : 1472137758
 }
 \end{lstlisting}
 
