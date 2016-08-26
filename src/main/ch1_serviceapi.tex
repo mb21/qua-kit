@@ -50,9 +50,7 @@ Without any notification of Luci, the service is responsible of keeping Luci upd
 \begin{lstlisting}
 {
   result: json, // the result as specified in the output field upon service registration
-  callID: integer,
-  serviceName: string,
-  taskID: integer // (0 if the service has been run not as a task but has been called "directly")
+  callID: integer
 }
 \end{lstlisting}
 
@@ -61,9 +59,7 @@ From time to time, the service might want to keep Luci updated of it's progress.
 {
   progress: integer,
   callID: integer,
-  serviceName: string,
-  taskID: integer,
-  intermediateResult: json // some result, it is optional.
+  OPT intermediateResult: json // some result, it is optional.
 }
 \end{lstlisting}
 
