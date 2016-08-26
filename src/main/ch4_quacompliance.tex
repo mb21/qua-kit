@@ -15,7 +15,7 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
   callID : 1, // obligatory
   qua-view-compliant : true, // obligatory
   inputs : {
-    geomID : number, // obligatory for all modes except "new"
+    OPT geomID : number, // obligatory for all modes except "new"
     mode : string, // obligatory
     points : attachment,
     some other input : number,
@@ -39,20 +39,20 @@ To make a service compliant for use in the QUA-Kit, a service is subject to addi
   },
   exampleCall : {
     {
-      run : RandomQUA,
-      inputs : {
-        ScID : 123,
-        mode : "points",
-        points : {
-          format : "float32 array",
-          attachment {
-            length : 100,
-            position : 1
-          }
+      run : "RandomQUA",
+      geomID : 123,
+      mode : "points",
+      points : {
+        format : "float32 array",
+        name : "points"
+        attachment {
+          length : 100,
+          position : 1,
+          checksum : "2929bead3ee3cf55113ec9aade2b6add"
         }
-        some other input : 42,
-        some 4th input : 13.37
       }
+      some other input : 42,
+      some 4th input : 13.37
     }
   }
 }
@@ -71,10 +71,67 @@ Note that a range constraint does not necessarily contain all three arguments mi
 \paragraph{Inputs}
 While services originally can have arbitrary inputs, in QUA-compliant services, two input fields become obligatory: \texttt{mode} and \texttt{ScID}.The mode is how the service should operate, normally it operates on a \texttt{scenario}, \texttt{objects} or \texttt{points} level; or creates a new scenario in the mode \texttt{new}.
 
-The scenario-id specifies the scenario which should be analyzed by the service. If the mode is either objects or points, a binary attachment must be included in the service call:
+The scenario-id specifies the scenario which should be analyzed by the service. If the mode is either \texttt{objects} or \texttt{points}, a binary attachment must be included in the service call:
 \begin{itemize}
   \item \texttt{points}: Points are serialized to a binary file of \texttt{float32} values wherein three consecutive values correspond to one three dimensional vector.
+  \item \textbf{Objects} are serialized to a binary file \texttt{ulong64} values wherein each value corresponds to one object id contained in the specified scenario.
 \end{itemize}
+
+Examples are given in Listings \ref{lst:quacompliantinput:scenario}, \ref{lst:quacompliantinput:objects}, \ref{lst:quacompliantinput:points}, \ref{lst:quacompliantinput:new}.
+
+\begin{lstlisting}[caption={A qua-compliant service run request for mode \texttt{scenario}}, label={lst:quacompliantinput:scenario}]
+{
+  run : "RandomQUA",
+  callID : 0,
+  geomID : 123,
+  mode : "scenario"
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={A qua-compliant service run request for mode \texttt{points}}, label={lst:quacompliantinput:points}]
+{
+  run : "RandomQUA",
+  callID : 0,
+  geomID : 123,
+  mode : "points",
+  points : {
+    format : "float32 array",
+    name : "points",
+    attachment {
+      length : 3072,
+      position : 1,
+      checksum : "2929bead3ee3cf55113ec9aade2b6add"
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={A qua-compliant service run request for mode \texttt{objects}}, label={lst:quacompliantinput:objects}]
+{
+  run : "RandomQUA",
+  callID : 0,
+  geomID : 123,
+  mode : "objects",
+  points : {
+    format : "ulong64 array",
+    name : "objects",
+    attachment {
+      length : 2048,
+      position : 1,
+      checksum : "50752c7cb358a5fffd913d9aa3605433"
+    }
+  }
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={A qua-compliant service run request for mode \texttt{new}}, label={lst:quacompliantinput:new}]
+{
+  run : "RandomQUA",
+  callID : 0,
+  mode : "new" // Note how the call does not contain a geomID
+}
+\end{lstlisting}
 
 \paragraph{Outputs}
 The output of a qua-compliant service depends on the mode it operates in. The header is therefore appended with the field \texttt{mode} which corresponds to the given input mode. The additional fields are defined as follows:
