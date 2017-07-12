@@ -14,9 +14,10 @@ module Handler.Mooc.BrowseProposals
   ( getBrowseProposalsR
   ) where
 
-import Import
+import Import hiding ((/=.), (==.), (<.), (>.), isNothing, on)
 import qualified Data.Text as Text
 import qualified Text.Blaze as Blaze
+import Database.Esqueleto
 import Database.Persist.Sql (rawSql, Single (..))
 
 
@@ -25,7 +26,7 @@ pageSize = 80
 
 getBrowseProposalsR :: Int -> Handler Html
 getBrowseProposalsR page = do
-    usersscenarios <- runDB $ getLastSubmissions page
+    scenarios <- getCurrentScenarios page
     pages <- negate . (`div` pageSize) . negate <$> runDB countUniqueSubmissions
     let is = [1..pages]
     fullLayout Nothing "Qua-kit student designs" $ do
@@ -53,34 +54,34 @@ getBrowseProposalsR page = do
         [hamlet|
           <div class="ui-card-wrap">
             <div class="row">
-              $forall ((scId, scpId, uId), lu, desc, uname, crits) <- usersscenarios
+              $forall ((Entity scId sc), _, _, _, _) <- scenarios
                 <div class="col-lg-4 col-md-6 col-sm-9 col-xs-9 story_cards">
                   <div.card>
                     <aside.card-side.card-side-img.pull-left.card-side-moocimg>
-                      <img src="@{ProposalPreviewR scId}" width="200px" height="200px" style="margin-left: -25px;">
-                    <div.card-main>
-                      <div.card-inner style="margin: 10px 12px;">
-                        <p style="margin: 6px 0px; color: #b71c1c;">
-                          #{uname}
-                            <br>
-                          #{show $ utctDay $ lu}
-                        <p style="margin: 6px 0px; white-space: pre-line; overflow-y: hidden; color: #555;">
-                         #{shortComment desc}
-                      <div.card-comment.card-action>
-                        $forall (svg, cname, rating) <- crits
-                         $if rating > 0
-                          <span.card-comment.card-criterion style="opacity: #{cOpacity rating}" title="#{cname}">
-                            #{svg}
-                            <p style="display: inline; margin: 0; padding:0; color: rgb(#{156 + rating}, 111, 0)">
-                              #{rating}
-                         $else
-                          <span.card-comment.card-criterion style="opacity: 0.3" title="Not enough votes to show rating">
-                            #{svg}
-                            \ - #
-                        <div.card-action-btn.pull-right>
-                          <a.btn.btn-flat.btn-brand-accent.waves-attach.waves-effect href="@{SubmissionViewerR scpId uId}" target="_blank">
-                            <span.icon>visibility
-                            View
+                      <img src="@{ProposalPreviewR $ scId}" width="200px" height="200px" style="margin-left: -25px;">
+                    $# <div.card-main>
+                    $#   <div.card-inner style="margin: 10px 12px;">
+                    $#     <p style="margin: 6px 0px; color: #b71c1c;">
+                    $#       #{uname}
+                    $#         <br>
+                    $#       #{show $ utctDay $ lu}
+                    $#     <p style="margin: 6px 0px; white-space: pre-line; overflow-y: hidden; color: #555;">
+                    $#      #{shortComment desc}
+                    $#   <div.card-comment.card-action>
+                    $#     $forall (svg, cname, rating) <- crits
+                    $#      $if rating > 0
+                    $#       <span.card-comment.card-criterion style="opacity: #{cOpacity rating}" title="#{cname}">
+                    $#         #{svg}
+                    $#         <p style="display: inline; margin: 0; padding:0; color: rgb(#{156 + rating}, 111, 0)">
+                    $#           #{rating}
+                    $#      $else
+                    $#       <span.card-comment.card-criterion style="opacity: 0.3" title="Not enough votes to show rating">
+                    $#         #{svg}
+                    $#         \ - #
+                    $#     <div.card-action-btn.pull-right>
+                    $#       <a.btn.btn-flat.btn-brand-accent.waves-attach.waves-effect href="@{SubmissionViewerR scpId uId}" target="_blank">
+                    $#         <span.icon>visibility
+                    $#         View
 
           <!-- footer with page numbers -->
           $if pages > 1
@@ -121,6 +122,51 @@ shortComment t = dropInitSpace . remNewLines $
                     . map (Text.dropWhile (\c -> c == ' ' || c == '\r' || c == '\t'))
                     . Text.lines
         dropInitSpace = Text.dropWhile (\c -> c == ' ' || c == '\n' || c == '\r' || c == '\t')
+
+getCurrentScenarios :: Int -> Handler [(Entity Scenario, Text, Text, Text, Double)]
+getCurrentScenarios page = do
+  let onlyNewestVersion s ms = do
+        -- see https://stackoverflow.com/questions/45057213
+        on ( just (s ^. ScenarioAuthorId)  ==. ms ?. ScenarioAuthorId &&.
+             just (s ^. ScenarioTaskId)    ==. ms ?. ScenarioTaskId   &&.
+             just (s ^. ScenarioLastUpdate) <. ms ?. ScenarioLastUpdate )
+             --TODO: also exclude duplicates with same lastUpdate
+        where_ (isNothing (ms ?. ScenarioId))
+  scenarios <- runDB
+    $ select
+    $ from $ \( s
+        `LeftOuterJoin` ms
+        `InnerJoin` u
+        `InnerJoin` pc
+        `InnerJoin` c
+        `LeftOuterJoin` r
+        ) -> do
+      on (r  ?. RatingCriterionId  ==. just (c ^. CriterionId) &&.
+          r  ?. RatingAuthorId     ==. just (s ^. ScenarioAuthorId) &&.
+          r  ?. RatingProblemId    ==. just (s ^. ScenarioTaskId) )
+      on (pc ^. ProblemCriterionCriterionId ==. c ^. CriterionId)
+      on (pc ^. ProblemCriterionProblemId   ==. s ^. ScenarioTaskId)
+      on (s  ^. ScenarioAuthorId ==. u ^. UserId)
+      onlyNewestVersion s ms
+
+
+      orderBy [ desc (s ^. ScenarioTaskId)
+              -- , desc (score TODO)
+              -- , desc (s ^. ScenarioId)
+              -- , asc  (c ^. CriterionId)
+              ]
+      limit  (fromIntegral pageSize)
+      offset (fromIntegral $ pageSize*(max 0 $ page - 1))
+      return ( s
+             , u ^. UserName
+             , c ^. CriterionIcon
+             , c ^. CriterionName
+             , coalesceDefault [r ?. RatingValue] (val 0)
+             )
+  let unValues (s, Value uName, Value cIcon, Value cName, Value rVal) =
+        (s, uName, cIcon, cName, rVal)
+  return $ map unValues scenarios
+
 
 -- | get user name, scenario, and ratings
 getLastSubmissions :: Int -> ReaderT SqlBackend Handler
